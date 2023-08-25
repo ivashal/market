@@ -2,15 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
 from .models import Category, SubCategory, Products
-from .forms import CategoryForm, SubCategoryForm, ProductForm
+from .forms import CategoryForm, SubCategoryForm, Products
 from django.urls import reverse_lazy
 
-# Create your views here.
+
 def index(request):
     return HttpResponse('This is page PRODUCTS')
 
 def root_index(request):
-    return render(request,'products/base.html')
+    return render(request, 'products/base.html')
 
 
 class CategoryCreateView(CreateView):
@@ -24,5 +24,4 @@ class CategoryCreateView(CreateView):
 class CategoryListView(ListView):
     model = Category
     template_name = 'products/category-list.html'
-    context_object_name = 'cotegories'
-
+    context_object_name = 'categories'

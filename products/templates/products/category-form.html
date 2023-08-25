@@ -1,5 +1,7 @@
 <form action="{% url 'products:category-form' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}   <!--as_p - метод отображения формы, добавлять абзац между формами-->
+    {{ form.as_p }}
     <button type="submit">Добавить категорию</button>
 </form>
+
+<!--as_p - метод отображения формы, добавлять абзац между формами-->
