@@ -11,4 +11,10 @@
         <td align="center">{{category.slug}}</td>
      </tr>
     {% endfor %}
+    
 </table>
+<br>
+{% for subcat in subcategories %}
+<p>{{subcat.name}}</p>
+<p>{{subcat.slug}}</p>
+{% endfor %}
