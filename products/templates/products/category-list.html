@@ -1,20 +1,20 @@
-<table border="2">
-    <th>ID</th>
-    <th>Название</th>
-    <th>Описание</th>
-    <th>URL</th>
-    {% for category in categories %}
-    <tr>
-        <td align="center" >{{category.id}}</td>
-        <td align="center">{{category.name}}</td>
-        <td align="center">{{category.description}}</td>
-        <td align="center">{{category.slug}}</td>
-     </tr>
+{% extends 'products/base.html' %}
+{% block content %}
+<body>
+<ul>
+    {% for cat in categories %}
+        <li>{{cat.name}}</li>
+    <ul>
+        {% for subcategory in cat.categories.all %}
+            <li>{{ subcategory.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+
     {% endfor %}
-    
-</table>
-<br>
-{% for subcat in subcategories %}
-<p>{{subcat.name}}</p>
-<p>{{subcat.slug}}</p>
-{% endfor %}
+
+</ul>
+</body>
+
+{% endblock content %}

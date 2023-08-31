@@ -7,7 +7,7 @@ from slugify import slugify
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Имя категории', unique=True)
     description = models.TextField(max_length=1000, verbose_name='Описание категории')
-    slug = models.SlugField(max_length=70, unique=True, verbose_name='URL-имя', editable=False)  # отображает имя сущности
+    slug = models.SlugField(max_length=256, unique=True, verbose_name='URL-имя', editable=False)  # отображает имя сущности
 
     class Meta:
         verbose_name = 'Категория'
@@ -17,9 +17,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def get_url(self):  # Используется для получения URL возвращает страничку
-        return reverse('category_detail', args=[self.slug])  # передает имя продукта
-    
+        
     def save(self, *args, **kwargs):  ## Выполняется в тот момент когда мы создаем строчку в таблице
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)  ## Для применения изменений в родительский класс
@@ -27,7 +25,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Имя подкатегории')
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория', related_name='category')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория', related_name='categories')  ## elated_name='category' - имя связи
     slug = models.SlugField(max_length=70, unique=True, verbose_name='URL-имя', editable=False)  ## Эдитейбл - возможность релактировать
 
     class Meta:
@@ -38,6 +36,9 @@ class SubCategory(models.Model):
     def save(self, *args, **kwargs):  ## Выполняется в тот момент когда мы создаем строчку в таблице
         self.slug = slugify(self.name)
         super(SubCategory, self).save(*args, **kwargs)  ## Для применения изменений в родительский класс
+
+    def get_absolute_url(self):  # Используется для получения URL возвращает страничку
+        return reverse('products:product-list',kwargs={'cat_slug': self.category.slug, 'subcat_slug': self.slug})  # передает имя продукта
 
 
 class Products(models.Model):
