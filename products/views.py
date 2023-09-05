@@ -1,4 +1,5 @@
 from typing import Any, Dict
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -63,10 +64,31 @@ class ProductCreateView(CreateView):
         context['subcategories'] = SubCategory.objects.all()
         return context
     
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    def form_valid(self, form):
+        self.instance = form.save(commit=False)
+        self.instance.category_id = self.request.POST.get('category')
+        self.instance.subcategory_id = self.request.POST.get('subcategory')
+        self.instance.save()
         return super().form_valid(form)
     
 
 
 class ProductListView(ListView):
-    pass
+    model = Products
+    template_name = 'products/products-list.html'
+    context_object_name = 'products'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        super().get_queryset()
+        slug = self.request.resolver_match.kwargs['subcat_slug']
+        queryset = Products.objects.filter(subcategory__slug = slug)  ## по двойному подчеркиванию мы обращаемся к полю связанной модели
+        return queryset
+    
+def get_category(self):
+    category = Category.objects.all()
+    context = {
+        'category_list': category
+    }
+    return context
+
+
