@@ -64,10 +64,10 @@ class Products(models.Model):
        verbose_name_plural = 'Товары'
        ordering = ['name', '-price']
 
-    def get_absolut_url(self):
+    def get_absolute_url(self):
         return reverse('products:product-detail', kwargs={
             'cat_slug':self.category.slug,
-            'subcat_slug': self.slug,
+            'subcat_slug': self.subcategory.slug,
             'prod_slug': self.slug
             }
         )

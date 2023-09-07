@@ -7,7 +7,7 @@
  
 <div class="products">
     {% for prod in products %}
-      <div class="product">
+      <div class="product" color="white">
         {% if prod.image %}
           {% thumbnail prod.image "300" as im %}
             <a href="{{ prod.get_absolute_url }}"><img src="{{im.url}}"></a>
@@ -15,11 +15,11 @@
         {% else %}
           <a href="{{ prod.get_absolute_url }}"><img src="/static/img/no-image.png"></a>
       {% endif %}
- 
+        
         <h2>{{ prod.name }}</h2>
         <p>{{ prod.description }}</p>
         <p>{{ prod.price }} руб.</p>
-        
+        </body>
       </div>
     {% endfor %}
     </div>

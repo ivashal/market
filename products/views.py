@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from .models import Category, SubCategory, Products
 from .forms import CategoryForm, ProductForm, SubCategoryForm, Products
 from django.urls import reverse_lazy
@@ -84,6 +84,7 @@ class ProductListView(ListView):
         queryset = Products.objects.filter(subcategory__slug = slug)  ## по двойному подчеркиванию мы обращаемся к полю связанной модели
         return queryset
     
+
 def get_category(self):
     category = Category.objects.all()
     context = {
@@ -92,3 +93,8 @@ def get_category(self):
     return context
 
 
+class ProductDetailView(DetailView):
+    model = Products
+    template_name = "products/product-detail.html"
+    context_object_name = 'product'
+    slug_url_kwarg = 'prod_slug'

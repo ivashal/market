@@ -1,0 +1,22 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block content %}
+{% load thumbnail %}
+
+<div class="product-detail">
+    {% if product.image %}
+            {% thumbnail product.image "300" as im %}
+                <a href="{{ product.get_absoluute_url }}"><img src="{{im.url}}"></a>
+            {% endthumbnail%}
+        {% else %}
+            <a href="{{ product.get_absoluute_url }}"><img src="/static/img/no-image.png"></a>
+    {% endif %}
+    <h1>{{ ptoduct.name }}</h1>
+    <h2>
+        <a href="{{ product.subcategory.get_absolute_url }}">
+            {{ product.category }}
+        </a>
+        <p class="Price">{{ product.price }} руб.</p>
+        {{ product.description|linebreaks }}
+</div>
+{% endblock %}
