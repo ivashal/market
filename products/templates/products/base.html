@@ -13,28 +13,33 @@
 </head>
 
 <body>
+  
     <style>
         body {
-            background-image: url("{% static 'img/background.jpg' %}");
+            {% comment %} background-image: url("{% static 'img/background.jpg' %}"); {% endcomment %}
+            background: #520870;
             background-repeat: no-repeat;
             background-size: cover;
             color: white;
         }
 
     </style>
-    <ul class="menu-main">
+    <header>
+    <div class="menu-main">
         <li><a href="" class="current">Главная</a></li>
         <li><a href="">Категории</a></li>
         <li><a href="">Заказы</a></li>
         <li><a href="">Карзина</a></li>
-        <br>
-        <br>
+    </div>    
+    <div class="menu-main">    
         <li><a href="">Регистрация</a></li>
         <li><a href="">Войти</a></li>
         <li><a href="">Выйти</a></li>
-    </ul>
+    </div>
     
-  <ul class="nav nav-pills">
+  </header>
+    
+  <ul class="nav flex-column">
     {% for cat in category_list %}
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{cat.name}}</a>
@@ -58,18 +63,3 @@
 </body>
 </html>
 
-
-<!-- <h1>Lavalamp CSS Menu</h1>
-
-<nav>
-	<a href="">Home</a>
-	<a href="">About</a>
-	<a href="">Blog</a>
-	<a href="">Portefolio</a>
-	<a href="">Contact</a>
-	<div class="animation start-home"></div>
-</nav>
-
-<p>
-  By <span>Patak</span>
-</p> -->

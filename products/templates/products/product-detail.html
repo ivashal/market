@@ -3,7 +3,7 @@
 {% block content %}
 {% load thumbnail %}
 
-<div class="product-detail">
+<div class="product-detail" style="padding-left: 20%;">
     {% if product.image %}
             {% thumbnail product.image "300" as im %}
                 <a href="{{ product.get_absoluute_url }}"><img src="{{im.url}}"></a>
@@ -18,5 +18,12 @@
         </a>
         <p class="Price">{{ product.price }} руб.</p>
         {{ product.description|linebreaks }}
+    </h2>
+    <h2>
+        <form action="{% url 'cart:cart-add' prod.id %}" method="post">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Добавить в корзину">
+          </form>
 </div>
 {% endblock %}

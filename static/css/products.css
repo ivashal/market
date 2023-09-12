@@ -2,8 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-left: 10%;
-	padding-right: 5%;
+    padding-left: 15%;
+	  padding-right: 5%;
   }
   .product {
     width: calc(25% - 10px);
