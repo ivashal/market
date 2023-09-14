@@ -7,7 +7,7 @@ from django.views.generic import CreateView, ListView, DetailView
 from .models import Category, SubCategory, Products
 from .forms import CategoryForm, ProductForm, SubCategoryForm, Products
 from django.urls import reverse_lazy
-
+from cart.forms import CartAddProductForm
 
 # def index(request):
 #     return HttpResponse('This is page PRODUCTS')
@@ -77,6 +77,12 @@ class ProductListView(ListView):
     model = Products
     template_name = 'products/products-list.html'
     context_object_name = 'products'
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        form = CartAddProductForm
+        context = super().get_context_data(**kwargs)  
+        context['cart_product_form'] = form
+        return context
 
     def get_queryset(self) -> QuerySet[Any]:
         super().get_queryset()

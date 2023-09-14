@@ -20,8 +20,8 @@
         {{ product.description|linebreaks }}
     </h2>
     <h2>
-        <form action="{% url 'cart:cart-add' prod.id %}" method="post">
-            {{ cart_product_form }}
+        <form action="{% url 'cart:cart-add' product.id %}" method="post">
+            
             {% csrf_token %}
             <input type="submit" value="Добавить в корзину">
           </form>

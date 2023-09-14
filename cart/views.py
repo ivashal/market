@@ -82,6 +82,11 @@ def cart_add(request, product_id):
         cart.add(product=product,
                  quantity=cd['quantity'],
                  override_quantity=cd['override'])
+    
+    else:
+        cart.add(product=product,
+                 quantity=1,
+                 override_quantity=False)
         
     return redirect('cart:cart-detail')  ## Указать место в которое будет переводить после добавления в карзину
 
@@ -92,7 +97,7 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Products, id=product_id)
     cart.remove(product)
 
-    return redirect('cart:cart-datail')
+    return redirect('cart:cart-detail')
 
 
 def cart_detail(request):
