@@ -3,6 +3,7 @@ from django import forms  ## Для переопределения полей в
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 
+
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput, error_messages={'required': 'Пожалуйста заполните поле!'})
     password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput)
@@ -54,3 +55,4 @@ class AuthForm(AuthenticationForm):
         ),
         "inactive": _("Этот аккаунт заблокирован."),
     }
+

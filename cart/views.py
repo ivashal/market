@@ -1,3 +1,4 @@
+from cart.models import CartItem, CartUser
 from market import settings
 from products.models import Products
 from decimal import Decimal
@@ -107,3 +108,48 @@ def cart_detail(request):
             'quantity': item['quantity'],
             'override': True})
     return render(request, 'cart/cart-detail.html', {'cart':cart})
+
+
+class ProductCartUser:
+    def __init__(self, request):
+        self.cart = {}
+        self.user = request.user
+
+        user_cart, created = CartUser.objects.get_or_create(user=self.user)
+        products_in_cart = CartItem.objects.filter(cart=user_cart)
+
+        for item in products_in_cart:  ## Проходим по элементам в корзинеи смотрим что там
+            self.cart[str(item.product.id)] = {'quantity': str(item.quantity), 'price': str(item.product.price)}
+
+
+    def add_cart(self, product, quantity=1, override_quantity=False):
+        product_id = str(product_id)
+        product = Products.objects.get(pk=product_id)
+
+        if product_id not in self.cart:
+            self.cart[product_id]={'quantity': str(quantity), 'price': str(product.price)}
+            
+        else:
+            if not override_quantity:
+                current_quantity = int(self.cart[product_id]['quantity'])
+                self.cart[product_id]['quantity'] = str(current_quantity+quantity)
+            else:
+                self.cart[product_id]['quantity'] = quantity
+
+        self.save()
+
+    def save(self):
+        for id in self.cart:
+            product = Products.objects.get(pk=int(id))
+            user_cart = CartUser.objects.get(user=self.user)
+
+            if CartItem.objects.filter(cart=user_cart, product=product).exists():  ## exist - существует
+                item = CartItem.objects.get(product=product)
+                item.quantity = self.cart[id]['quantity']
+                item.save()
+            else:
+                CartItem.objects.create(cart=user_cart, product=product, quantity=self.cart[id]['quantity'])
+
+
+    # def __len__(self):
+    #     return sum(int(item['quantity'])) for 
