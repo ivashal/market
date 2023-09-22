@@ -10,9 +10,9 @@ class CartUser(models.Model):
     def __str__(self) -> str:
         return self.user.username
 
-class CartItem(models.Model):
+class CartItem(models.Model):  ## Модель позиции в корзине
     cart = models.ForeignKey(CartUser, on_delete=models.CASCADE, related_name='cart')
-    product = models.OneToOneField(Products, on_delete=models.CASCADE, related_name='products')
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='products')
     quantity = models.IntegerField()
 
 

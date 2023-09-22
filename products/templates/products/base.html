@@ -27,24 +27,23 @@
     <header>
     <div class="menu-main">
         <li><a href="{% url "products:index" %}" class="current">Главная</a></li>
-        {% comment %} <li><a href="{% url "products:products-list" %}">Категории</a></li> {% endcomment %}
         <li><a href="">Заказы</a></li>
-        <li><a href="{% url "cart:cart-detail" %}">Карзина</a></li>
-        <li>
-          <div class="cart">
-            {% with total_items=cart|length %}
-            {% if total_items > 0 %}
+        <li><a href="{% url "cart:cart-detail" %}">Корзина</a></li>
+        
+        <li class="cart">
+              {% with total_items=cart|length %}
+              {% if total_items > 0 %}
             
-            <a style="text-align:right; margin-right:30px" href="{% url "cart:cart-detail" %}">
-              {{ total_items }} ед. -
-              {{ cart.get_total_price }} руб.
-            </a>
-            {% else %}
+              <a style="text-align:right; margin-right:30px" href="{% url "cart:cart-detail" %}">
+                {{ total_items }} ед. -
+                {{ cart.get_total_price }} руб.
+              </a>
+              {% else %}
             
-            {% endif %}
-            {% endwith %}
+              {% endif %}
+              {% endwith %}
           </p>
-          </div>
+          
         </li>
     </div>    
     <div class="menu-main">
