@@ -68,7 +68,28 @@
   <ul class="nav flex-column">
     {% for cat in category_list %}
     <li class="nav-item dropdown">
+      
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{cat.name}}</a>
+      <style>
+        a {
+          color:white;
+        } 
+        .nav-link {
+            display: block;
+            padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+            font-size: var(--bs-nav-link-font-size);
+            font-weight: var(--bs-nav-link-font-weight);
+            color: #d90dfd;
+            text-decoration: none;
+            background: 0 0;
+            border: 0;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+        }
+        
+        .nav {
+          --bs-nav-link-hover-color: red;
+        }
+      </style>
       <ul class="dropdown-menu">
         {% for subcat in cat.categories.all %}
         <li><a class="dropdown-item" href="{{ subcat.get_absolute_url }}">{{ subcat.name }}</a></li>
