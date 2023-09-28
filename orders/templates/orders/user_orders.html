@@ -1,0 +1,28 @@
+{% extends "products/base.html" %}
+{% block content %}
+{% load static %}
+ 
+<link rel="stylesheet" href="{% static 'css/orders.css'%}" type="text/css">
+ 
+    <table class="order-info">
+        <tr>    
+            <th>Номер заказа</th>
+            <th>Статус</th>
+            <th>Сумма заказа</th>
+            <th>Способ оплаты</th>
+            <th>Вариант доставки</th>
+        </tr>
+        {% for  order in orders %}
+                <tr>
+                   <td>
+                       <a href={% url "orders:order-detail" order.number%}>{{order.number}}</a>
+                    </td>
+                    {% comment %} <td>{{order.number}}</td> {% endcomment %}
+                    <td>{{order.status}}</td>
+                    <td>{{order.total_price}}</td>
+                    <td>{{order.payment}}</td>
+                    <td>{{order.deliviry}}</td>
+                </tr>
+        {% endfor %}
+ 
+{% endblock content %}

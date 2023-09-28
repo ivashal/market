@@ -26,9 +26,11 @@
     </style>
     <header>
     <div class="menu-main">
-        <li><a href="{% url "products:index" %}" class="current">Главная</a></li>
-        <li><a href="">Заказы</a></li>
-        <li><a href="{% url "cart:cart-detail" %}">Корзина</a></li>
+        <li><a href="{% url 'products:index' %}" class="current">Главная</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'orders:order-list' %}">Заказы</a></li>
+        {% endif %}
+        <li><a href="{% url 'cart:cart-detail' %}">Корзина</a></li>
         
         <li class="cart">
               {% with total_items=cart|length %}

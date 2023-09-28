@@ -84,8 +84,11 @@
 <p class="text-right">
     <a href={% url 'products:index' %} class="button">Продолжить покупки</a>
 </p>
+{% if cart|length > 0 %}
+
 <p class="text-right">
     <a href={% url 'orders:order-create' %} class="button">Оформить заказ</a>
 </p>
+{% endif %}
 </div>
 {% endblock %}

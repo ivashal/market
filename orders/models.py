@@ -1,7 +1,9 @@
-import uuid
+
 from django.db import models
 from cart.models import Products
 from django.utils.timezone import datetime
+from django.contrib.auth.models import User
+
  
 STATUS_CHOICES = (
     ("in_process", "В обработке"),  ## (<Как будет храниться в базе>, <как будет отображаться>)
@@ -18,7 +20,8 @@ STATUS_CHOICES = (
 def get_order_number():
     date = datetime.now().strftime('%Y-%m-%d')
     if Order.objects.all().last():
-        last_order = Order.objects.all().last()
+        last_order = Order.objects.order_by('created_at').last()
+        # last_order = Order.objects.all().last()
         if last_order.number[0:10] == date:
             num = int(last_order.number[11::]) + 1
         else:
@@ -30,6 +33,7 @@ def get_order_number():
  
 class Order(models.Model):
     number = models.CharField(primary_key=True, unique=True, max_length=256, default=get_order_number, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, editable=False)
     first_name = models.CharField(max_length=256, verbose_name='Имя')
     last_name = models.CharField(max_length=256, verbose_name='Фамилия')
     email = models.EmailField(verbose_name='Электронная почта')
@@ -50,4 +54,6 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='orders')
     quantity = models.IntegerField()
- 
+    
+    def get_total_price(self):
+        return self.product.price * int(self.quantity)

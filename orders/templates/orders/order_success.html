@@ -1,0 +1,8 @@
+{% extends "products/base.html" %}
+
+{% block content %}
+<h1>Заказ оформлен!</h1>
+<h2>Номер вашего заказа <span style='color:red'>{{order.number}}</span> от {{order.created_at | date:'d.m.Y'}}</h2>
+<h3><a href={% url 'products:index' %}> Вернуться к покупкам </a><h3>
+
+{% endblock content %}
