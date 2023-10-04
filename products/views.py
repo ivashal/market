@@ -23,12 +23,25 @@ def index(request):
 #     return render(request, 'products/index.html')
 
 
+# class CategoryCreateView(CreateView):
+#     model = Category
+#     fields = '__all__'
+#     form = CategoryForm
+#     template_name = 'products/category-form.html'
+#     success_url = reverse_lazy('products:category-list')
+
 class CategoryCreateView(CreateView):
     model = Category
     fields = '__all__'
     form = CategoryForm
     template_name = 'products/category-form.html'
     success_url = reverse_lazy('products:category-list')
+
+    def my_view(request):
+        form = CategoryForm()
+        context = {'form':form}
+        return render(request, 'users/base.html', context=context)
+
 
 
 class CategoryListView(ListView):
@@ -104,3 +117,5 @@ class ProductDetailView(DetailView):
     template_name = "products/product-detail.html"
     context_object_name = 'product'
     slug_url_kwarg = 'prod_slug'
+
+

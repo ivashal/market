@@ -12,7 +12,7 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'email') ## Поля
         help_texts = {
-            'username': 'Только буквы, цыфры и символы @/./+/-/_',
+            'username': 'Только буквы, цифры и символы @/./+/-/_',
         }
 
         verbose_name = {
